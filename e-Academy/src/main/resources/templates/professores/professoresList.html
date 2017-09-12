@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'professores')}">
+
+<body>
+
+  <h2>Lista de Professores e Turmas vinculadas</h2>
+
+  <table id="professores" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Habilitação</th>
+        <th>Turmas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="professor : ${professores.professorList}">
+        <td th:text="${professor.firstName}"></td>
+        <td th:text="${professor.habilitacao}"></td>        
+        <td><span th:each="turma : ${professor.turmas}"
+          th:text="${turma.name + ' - '}" /> <span
+          th:if="${professor.nrOfTurmas == 0}">Nenhuma turma vinculada</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table-buttons">
+    <tr>
+      <td><a th:href="@{/professores.xml}">Gerar XML  </a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/professores.json}">Gerar JSON</a></td>    
+    </tr>
+  </table>
+
+</body>
+</html>

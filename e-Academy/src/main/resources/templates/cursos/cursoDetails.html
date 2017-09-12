@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'cursos')}">
+
+  <body>
+  
+  
+    <h2>Detalhes do Curso</h2>
+  
+  
+    <table class="table table-striped" th:object="${curso}">
+      <tr>
+        <th>Nome do Curso</th>
+        <td><b th:text="*{name}"></b></td>
+      </tr>
+      <tr>
+        <th>Tipo de Curso</th>
+        <td th:text="*{tipo}"></td>
+      </tr>      
+      <tr>
+        <th>Habilitação </th>
+        <td th:text="*{habilitacao}" /></td>
+      </tr>
+      <tr>
+        <th>Períodos</th>
+        <td th:text="*{periodos}" /></td>
+      </tr>
+      <tr>
+        <th>Descrição</th>
+        <td th:text="*{descricao}" /></td>
+      </tr>      
+    </table>
+  
+    <a th:href="@{{id}/edit(id=${curso.id})}" class="btn btn-default">Editar
+      Curso</a>
+    <a th:href="@{{id}/curriculos/new(id=${curso.id})}" class="btn btn-default">Adicionar
+      Currículo</a>
+  
+    <br />
+    <br />
+    <br />
+    <h2>Currículos e Grade</h2>
+  
+    <table class="table table-striped">
+  
+      <tr th:each="curriculo : ${curso.curriculos}">
+        <td valign="top">
+          <dl class="dl-horizontal">
+            <dt>Nome do Currículo</dt>
+            <dd th:text="${curriculo.name}" /></dd>
+            <dt>Data de Vigência</dt>
+            <dd
+              th:text="${#calendars.format(curriculo.vigenciaDate, 'yyyy-MM-dd')}" /></dd>
+            <dt>Modalidade</dt>
+            <dd th:text="${curriculo.type}" /></dd>
+          </dl>
+        </td>
+        <td valign="top">
+          <table class="table-condensed">
+            <thead>
+              <tr>
+                <th>Data de Cadastro</th>
+                <th>Disciplina</th>
+              </tr>
+            </thead>
+            <tr th:each="disciplina : ${curriculo.disciplinas}">
+              <td th:text="${#calendars.format(disciplina.date, 'yyyy-MM-dd')}"></td>
+              <td th:text="${disciplina?.description}"></td>
+            </tr>
+            <tr>
+              <td><a
+                th:href="@{{cursoId}/curriculos/{curriculoId}/edit(cursoId=${curso.id},curriculoId=${curriculo.id})}">Editar
+                  Currículo</a></td>
+              <td><a
+                th:href="@{{cursoId}/curriculos/{curriculoId}/disciplinas/new(cursoId=${curso.id},curriculoId=${curriculo.id})}">Adicionar
+                  Disciplina</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+  
+    </table>
+  
+  </body>
+
+</html>

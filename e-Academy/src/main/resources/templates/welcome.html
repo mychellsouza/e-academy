@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+  <body>
+
+    <h2 th:text="#{welcome}">Bem Vindo</h2>
+    <div class="row">
+        <div class="col-md-12">
+      	  <div th:if="${#httpServletRequest.remoteUser != null}">
+		    Você está logado como <p th:text="${#httpServletRequest.remoteUser}">
+		      sample_user
+		    </p>
+			</div>
+			<br />   
+          <form th:action="@{/logout}" method="post">
+    		<input class="btn btn-default" type="submit" value="Deslogar" />
+		</form>
+        </div>
+    </div>
+
+  </body>
+
+</html>

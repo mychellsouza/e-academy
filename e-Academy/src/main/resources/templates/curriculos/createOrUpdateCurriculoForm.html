@@ -1,0 +1,37 @@
+﻿<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'cursos')}">
+
+<body>
+
+  <h2>
+    <th:block th:if="${curriculo['new']}">Novo </th:block>
+    Currículo
+  </h2>
+  <form th:object="${curriculo}" class="form-horizontal" method="post">
+    <input type="hidden" name="id" th:value="*{id}" />
+    <div class="form-group has-feedback">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Curso</label>
+        <div class="col-sm-10">
+          <span th:text="${curriculo.curso?.tipo + ' em ' + curriculo.curso?.name}" />
+        </div>
+      </div>
+      <input
+        th:replace="~{fragments/inputField :: input ('Currículo', 'name')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Data de Vigência', 'vigenciaDate')}" />
+      <input
+        th:replace="~{fragments/selectField :: select ('Modalidade', 'type', ${types})}" />
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button
+          th:with="text=${curso['new']} ? 'Salvar' : 'Atualizar'"
+          class="btn btn-default" type="submit" th:text="${text}">Salvar</button>
+      </div>
+    </div>
+  </form>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+﻿<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'cursos')}">
+
+<body>
+
+  <h2>
+    <th:block th:if="${disciplina['new']}">Grade </th:block>
+  </h2>
+
+  <b>Currículo</b>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data de Vigência</th>
+        <th>Modalidade</th>
+        <th>Curso</th>
+      </tr>
+    </thead>
+    <tr>
+      <td th:text="${curriculo.name}" /></td>
+      <td
+        th:text="${#calendars.format(curriculo.vigenciaDate, 'yyyy-MM-dd')}" /></td>
+      <td th:text="${curriculo.type}" /></td>
+      <td
+        th:text="${curriculo.curso?.tipo + '	em ' + curriculo.curso?.name}" /></td>
+    </tr>
+  </table>
+
+  <form th:object="${disciplina}" class="form-horizontal" method="post">
+    <div class="form-group has-feedback">
+      <input
+        th:replace="~{fragments/inputField :: input ('Data de Cadastro', 'date')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Disciplina', 'description')}" />
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
+        <button class="btn btn-default" type="submit">Salvar</button>
+      </div>
+    </div>
+  </form>
+
+  <br />
+  <b>Disciplinas</b>
+  <table class="table table-striped">
+    <tr>
+      <th>Data de Cadastro</th>
+      <th>Disciplina</th>
+    </tr>
+    <tr th:if="${!disciplina['new']}" th:each="disciplina : ${curriculo.disciplinas}">
+      <td th:text="${#calendars.format(disciplina.date, 'yyyy-MM-dd')}" /></td>
+      <td th:text=" ${disciplina.description}" /></td>
+    </tr>
+  </table>
+
+</body>
+</html>

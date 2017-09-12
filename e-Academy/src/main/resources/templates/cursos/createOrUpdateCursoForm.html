@@ -1,0 +1,30 @@
+﻿<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'cursos')}">
+
+<body>
+
+  <h2>Dados do Curso</h2>
+  <form th:object="${curso}" class="form-horizontal" id="add-curso-form" method="post">
+    <div class="form-group has-feedback">
+      <input
+        th:replace="~{fragments/inputField :: input ('Tipo de Curso', 'tipo')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Nome', 'name')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Habilitação', 'habilitacao')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Descrição', 'descricao')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Períodos', 'periodos')}" />
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button
+          th:with="text=${curso['new']} ? 'Salvar' : 'Atualizar'"
+          class="btn btn-default" type="submit" th:text="${text}">	Salvar
+          </button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
